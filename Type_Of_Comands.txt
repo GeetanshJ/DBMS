@@ -1,0 +1,146 @@
+DDL => create alter rename truncate drop
+DQL => select
+dml => insert update delete
+dcl(control) =>  grant revoke
+tcl (transaction control) => start commit rollback
+
+
+default constraint =>  if value not given by default is used ex =>  sal int default 25000
+check constraint =>  used to check the spe con in input eg => age int check age>= 18
+
+
+
+
+sales_id	sales_amount	some_column
+1	            500	            A
+2	            700	            A
+3	            1200	        B
+4	            800	            B
+5	            900	            C
+6	            1100	        C
+
+SELECT SUM(sales_amount)
+FROM sales
+WHERE sales_amount > 1000;
+Explanation: The WHERE clause filters individual rows based on the condition "sales_amount > 1000". It sums up only those sales_amounts that are individually greater than 1000. In this case, only 1200 and 1100 meet this condition, so the total sum will be 2300.
+
+Using HAVING Clause:
+
+sql
+Copy code
+SELECT SUM(sales_amount)
+FROM sales
+GROUP BY some_column
+HAVING SUM(sales_amount) > 1000;
+Explanation: The HAVING clause works after grouping the data. Here, we group the data by the values in the "some_column" column. Then, for each group, it calculates the sum of sales_amount. After that, it filters the groups based on the condition "SUM(sales_amount) > 1000". In this case, the sum of sales_amount for group "B" is 2000 and for group "C" is 2000. So, the output will be the sum of these amounts, which is 2000.
+
+
+
+
+
+
+
+SELECT * INTO CustomersGermany
+FROM Customers   into is used to copy from one table to other
+
+
+
+limit is used when we need less entries limit 3 means first 3 limit 6 means first 6
+limit 6,7 means skip first 6 and return next 7 1,4 means skip first then return rest 4
+
+
+
+
+
+
+
+
+
+
+difference between postgre and MySQL
+
+Connect to Database:
+PostgreSQL: \c database_name or \connect database_name
+MySQL: USE database_name;
+
+List Databases:
+PostgreSQL: \l or \list
+MySQL: SHOW DATABASES;
+
+List Tables:
+PostgreSQL: \dt or \d
+MySQL: SHOW TABLES;
+
+Describe Table:
+PostgreSQL: \d table_name
+MySQL: DESCRIBE table_name; or SHOW COLUMNS FROM table_name;
+
+also PostgreSQL supports both relational (SQL) and non-relational (JSON) queries.
+
+
+
+
+
+
+psql Command-Line Utility:
+\q: Quit the psql terminal.
+\l or \list: List all databases.
+\c database_name: Connect to a different database.
+\dt: List all tables in the current database.
+\du: List all users and their roles.
+\timing: Enable or disable timing of SQL commands.
+\! shell_command: Execute a shell command from within psql.
+\h: Get help on SQL commands.
+\?: Get help on psql commands.
+
+Database Management:
+createdb database_name: Create a new database.
+dropdb database_name: Delete an existing database.
+pg_dump database_name > backup_file.sql: Backup a database to a SQL dump file.
+psql -d database_name -f backup_file.sql: Restore a database from a SQL dump file.
+pg_ctl start: Start the PostgreSQL server.
+pg_ctl stop: Stop the PostgreSQL server.
+pg_ctl restart: Restart the PostgreSQL server.
+
+
+
+
+
+
+
+
+
+-- Navigation and Selection
+USE database_name; -- Selects a specific database to work with.
+SHOW DATABASES; -- Lists all databases on the server.
+SHOW TABLES; -- Lists all tables in the current database.
+DESCRIBE table_name; -- Shows the structure of a table.
+
+-- Data Manipulation
+SELECT * FROM table_name; -- Retrieves data from a table.
+INSERT INTO table_name (column1, column2, ...) VALUES (value1, value2, ...); -- Inserts new records into a table.
+UPDATE table_name SET column1 = value1, column2 = value2 WHERE condition; -- Updates existing records in a table.
+DELETE FROM table_name WHERE condition; -- Deletes records from a table.
+TRUNCATE TABLE table_name; -- Removes all records from a table.
+
+-- Table Management
+CREATE DATABASE database_name; -- Creates a new database.
+CREATE TABLE table_name (column1 datatype, column2 datatype, ...); -- Creates a new table.
+ALTER TABLE table_name ADD column_name datatype; -- Adds a new column to an existing table.
+ALTER TABLE table_name DROP COLUMN column_name; -- Removes a column from an existing table.
+DROP TABLE table_name; -- Deletes a table.
+
+-- User and Privilege Management
+CREATE USER 'username'@'host' IDENTIFIED BY 'password'; -- Creates a new user.
+GRANT privileges ON database_name.table_name TO 'username'@'host'; -- Grants specific privileges to a user.
+REVOKE privileges ON database_name.table_name FROM 'username'@'host'; -- Revokes previously granted privileges from a user.
+FLUSH PRIVILEGES; -- Reloads the privileges from the grant tables in the MySQL database.
+
+-- Session Management
+SET variable_name = value; -- Sets the value of a session variable.
+SHOW VARIABLES; -- Displays all MySQL system variables and their values.
+QUIT; -- Exits the MySQL command-line interface.
+
+-- Backup and Restore
+mysqldump -u username -p database_name > dump_file.sql; -- Creates a backup of a database.
+mysql -u username -p database_name < dump_file.sql; -- Restores a database from a backup.
